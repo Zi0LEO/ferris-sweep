@@ -62,11 +62,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     TO(BASE_LAYER), KC_SPC, KC_ENT, TO(SYM_LAYER)
   )
 };
-<<<<<<< HEAD
-
-=======
-
->>>>>>> f33161156cfcfcdc4c33fb5d6146f70018f4da2a
 // Tap dance definitions
 tap_dance_action_t tap_dance_actions[] = {
   // Numbers
