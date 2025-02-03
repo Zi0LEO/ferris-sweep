@@ -63,11 +63,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     TO(BASE_LAYER), KC_SPC, KC_ENT, KC_NO
   ),
   [GAME_LAYER] = LAYOUT_split_3x5_2(
-    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,   KC_Q,    KC_E,   KC_W,  KC_F,   KC_F1,
-    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,   KC_LSFT, KC_A,   KC_S,  KC_D,   KC_F2,
-    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,   KC_LCTL, KC_TAB, KC_NO, KC_H,   KC_B,
-    KC_NO, KC_NO,                                                KC_SPC, TD(TD_NO_BASE)
-  )
+    KC_Q,    KC_E,   KC_W,  KC_F,   KC_F1,          KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+    KC_LSFT, KC_A,   KC_S,  KC_D,   KC_F2,          KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+    KC_LCTL, KC_TAB, KC_NO, KC_H,   KC_B,           KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+                            KC_SPC, TD(TD_NO_BASE), KC_NO, KC_NO
+  ),
 };
 // Tap dance definitions
 tap_dance_action_t tap_dance_actions[] = {
