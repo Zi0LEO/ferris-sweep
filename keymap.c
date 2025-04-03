@@ -11,7 +11,6 @@ enum my_layers {
 };
 
 enum my_tap_dances {
-  TD_NO_BASE,
   TD_Q_1,
   TD_W_2,
   TD_F_3,
@@ -46,8 +45,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [SYM_LAYER] = LAYOUT_split_3x5_2(
     KC_EXLM, KC_DQUO, UC(0x00E8), KC_DLR, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_UNDS, KC_PLUS,
-    QK_GESC, KC_PIPE, TD(TD_LBRC_GLB), KC_LCBR, KC_LPRN, KC_COLN, KC_AT, KC_TILD, KC_MINS, KC_EQL,
-    TO(FUNC_LAYER), KC_LGUI, TD(TD_RBRC_GRB), KC_RCBR, KC_RPRN, KC_SCLN, KC_QUOT, KC_HASH, KC_BSLS, KC_BSLS,
+    KC_ESC, KC_PIPE, TD(TD_LBRC_GLB), KC_LCBR, KC_LPRN, KC_COLN, KC_AT, KC_TILD, KC_MINS, KC_EQL,
+    TO(FUNC_LAYER), KC_LGUI, TD(TD_RBRC_GRB), KC_RCBR, KC_RPRN, KC_SCLN, KC_QUOT, KC_HASH, KC_GRV, KC_BSLS,
     TO(BASE_LAYER), KC_SPC, KC_ENT, TO(NUM_LAYER)
   ),
   [NUM_LAYER] = LAYOUT_split_3x5_2(
@@ -63,16 +62,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     TO(BASE_LAYER), KC_SPC, KC_ENT, KC_NO
   ),
   [GAME_LAYER] = LAYOUT_split_3x5_2(
-    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,   KC_Q,    KC_E,   KC_W,  KC_F,   KC_F1,
-    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,   KC_LSFT, KC_A,   KC_S,  KC_D,   KC_F2,
-    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,   KC_LCTL, KC_TAB, KC_NO, KC_H,   KC_B,
-    KC_NO, KC_NO,                                                KC_SPC, TD(TD_NO_BASE)
-  )
+    KC_Q,    KC_E,   KC_W,  KC_F,    KC_F1,          KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+    KC_LSFT, KC_A,   KC_S,  KC_D,    KC_F2,          KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+    KC_LCTL, KC_TAB, KC_G,  KC_H,    KC_B,           KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
+                            QK_GESC, KC_SPC,         KC_NO, TO(BASE_LAYER)
+  ),
 };
 // Tap dance definitions
 tap_dance_action_t tap_dance_actions[] = {
   // Numbers
-  [TD_NO_BASE] = ACTION_TAP_DANCE_DOUBLE(KC_NO, TO(BASE_LAYER)),
   [TD_Q_1] = ACTION_TAP_DANCE_DOUBLE(KC_Q, KC_1),
   [TD_W_2] = ACTION_TAP_DANCE_DOUBLE(KC_W, KC_2),
   [TD_F_3] = ACTION_TAP_DANCE_DOUBLE(KC_F, KC_3),
@@ -104,6 +102,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   // Return to the base later after fn keys, space or enter have been pressed
   case KC_F1 ... KC_F12:
   case KC_SPC:
+    if (record->event.pressed) {
+      if (IS_LAYER_ON(GAME_LAYER)) {
+        break;
+      }
+    }
   case KC_ENT:
     if (record->event.pressed) {
       layer_move(BASE_LAYER);
